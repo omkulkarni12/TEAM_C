@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKILLSENSE RESUME MATCHER</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 SKILLSENSE Resume Screening</h1>
+        <p>Upload resumes and find the best match for your job description</p>
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="input-section">
+                <label>📄 Job Description:</label>
+                <textarea name="job_description" rows="6" placeholder="Paste job description here..." required>{{ job_description }}</textarea>
+            </div>
+
+            <div class="input-section">
+                <label>📤 Upload Resume(s) (PDF):</label>
+                <input type="file" name="resumes" accept=".pdf" multiple required>
+            </div>
+
+            <button type="submit" class="btn">Analyze</button>
+        </form>
+
+        {% if results %}
+        <div class="results">
+            <h2>🏆 Ranking Results</h2>
+            <p><strong>Top Match:</strong> {{ top_resume }}</p>
+
+            <table>
+                <tr>
+                    <th>Resume</th>
+                    <th>Matching Score</th>
+                </tr>
+                {% for row in results %}
+                <tr>
+                    <td>{{ row.Resume }}</td>
+                    <td>{{ row.Score|floatformat:3 }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
