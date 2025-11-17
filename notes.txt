@@ -1,0 +1,15 @@
+creating a project folder - SKILLSENSE
+
+SETTING VIRTUAL ENV:
+creating vitual environment named -> python -m venv venv
+    ->activating: venv\Scripts\activate
+    ->installing dependencies
+        ->django, PyPDF2, scikit-learn, pandas
+        ->pip install -r requirements.txt
+START DJANGO PROJECT:
+    ->django-admin startproject SKILLSENSE_AI_RESUME .
+    ->python manage.py startapp resume_ranker
+    ->add app to SKILLSENSE_AI_RESUME/settings.py
+    ->add SKILLSENSE_AI_RESUME/urls.py
+    ->creating resume_ranker/urls.py
+    ->Main code file is views.py
