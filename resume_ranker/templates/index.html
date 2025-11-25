@@ -9,8 +9,10 @@
 </head>
 <body>
     <div class="container">
-        <h1>🤖 SKILLSENSE Resume Screening</h1>
-        <p>Upload resumes and find the best match for your job description</p>
+        <div class="header">
+            <h1>🤖 SKILLSENSE Resume Screening</h1>
+            <p>Upload resumes and find the best match for your job description</p>
+        </div>
 
         <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
@@ -30,17 +32,97 @@
         {% if results %}
         <div class="results">
             <h2>🏆 Ranking Results</h2>
-            <p><strong>Top Match:</strong> {{ top_resume }}</p>
+            <div class="dashboard">
+                <div class="legend">
+                    <div class="legend-item"><span class="legend-dot" style="background:#e74c3c"></span>0–49 Low</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#f39c12"></span>50–69 Fair</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#16a085"></span>70–84 Good</div>
+                    <div class="legend-item"><span class="legend-dot" style="background:#2ecc71"></span>85–100 Excellent</div>
+                </div>
+                <div class="cards">
+                    {% for row in results %}
+                    <div class="donut-card {{ row.ColorClass }}">
+                        <div class="donut-wrap">
+                            <div class="donut" style="--p: {{ row.Percent }}"></div>
+                            <div class="donut-center">
+                                <div class="donut-value">{{ row.Percent }}%</div>
+                                <div class="donut-label">{{ row.Label }}</div>
+                            </div>
+                        </div>
+                        <p class="top-name">{{ row.Resume }}</p>
+                        <div class="skills-grid">
+                            <div class="skills-box">
+                                <h3>Skills You Have</h3>
+                                <ul class="skills-list">
+                                    {% if row.Present %}
+                                        {% for s in row.Present %}
+                                            <li><span class="chip chip-success">{{ s }}</span></li>
+                                        {% endfor %}
+                                    {% else %}
+                                        <li>-</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="skills-box">
+                                <h3>Missing Skills</h3>
+                                <ul class="skills-list missing">
+                                    {% if row.Missing %}
+                                        {% for s in row.Missing %}
+                                            <li><span class="chip chip-danger">{{ s }}</span></li>
+                                        {% endfor %}
+                                    {% else %}
+                                        <li>-</li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            <div class="skills-box">
+                                <h3>Recommended Courses</h3>
+                                {% if row.Recommendations %}
+                                <ul class="skills-list">
+                                    {% for rec in row.Recommendations %}
+                                        <li>
+                                            <span class="chip chip-skill">{{ rec.skill }}</span>
+                                            {% for p in rec.providers %}
+                                                <a class="link-chip" href="{{ p.url }}" target="_blank" rel="noopener">{{ p.name }}</a>
+                                            {% endfor %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                <ul class="skills-list"><li>-</li></ul>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
 
             <table>
                 <tr>
                     <th>Resume</th>
                     <th>Matching Score</th>
+                    <th>Skills You Have</th>
+                    <th>Missing Skills</th>
                 </tr>
                 {% for row in results %}
                 <tr>
                     <td>{{ row.Resume }}</td>
-                    <td>{{ row.Score|floatformat:3 }}</td>
+                    <td>{{ row.Score|floatformat:3 }} </td>
+                    <td>
+                        {% if row.Present %}
+                            {{ row.Present|join:", " }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if row.Missing %}
+                            {{ row.Missing|join:", " }}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
                 </tr>
                 {% endfor %}
             </table>

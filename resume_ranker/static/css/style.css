@@ -6,12 +6,21 @@ body {
 }
 
 .container {
-    max-width: 800px;
-    margin: 50px auto;
+    max-width: 1100px;
+    margin: 40px auto;
     background: #fff;
-    padding: 2em;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    padding: 2.2em;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+    border: 1px solid #e6edf5;
+}
+
+.header {
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed #eef2f7;
 }
 
 h1 {
@@ -80,3 +89,226 @@ th, td {
 th {
     background-color: #f1f3f6;
 }
+
+.dashboard {
+    display: grid;
+    gap: 20px;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.gauge-card {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: 8px;
+}
+
+.donut-card {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    gap: 12px;
+    position: relative;
+    --size: 220px;
+    --thickness: 22px;
+    background: #fff;
+    border: 1px solid #eef2f7;
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+
+.donut-card:hover {
+    box-shadow: 0 12px 26px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+.donut {
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    border-radius: 50%;
+    background: conic-gradient(from -90deg, var(--gauge-color, #16a085) calc(var(--p) * 1%), #e5e7eb 0);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - var(--thickness)), #000 calc(100% - var(--thickness)));
+    mask: radial-gradient(farthest-side, #0000 calc(100% - var(--thickness)), #000 calc(100% - var(--thickness)));
+    z-index: 1;
+}
+
+.donut-center {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    gap: 4px;
+    z-index: 2;
+}
+
+.donut-wrap {
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+}
+
+.donut-value {
+    padding-top: 30px;
+    padding-left: 7px;
+    font-size: 48px;
+    font-weight: 700;
+    color: #2C3E50;
+}
+
+.donut-label {
+    padding-bottom: 38px;
+    font-size: 23px;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.legend {
+    display: flex;
+    gap: 10px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #34495E;
+    background: #f7f9fc;
+    border: 1px solid #eef2f7;
+    border-radius: 20px;
+    padding: 4px 8px;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.gauge-text {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2C3E50;
+}
+
+.match-label {
+    font-weight: 600;
+    color: #34495E;
+    margin: 0;
+}
+
+.top-name {
+    color: #6c757d;
+    margin: 0;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.skills-box {
+    background: #f9fbfd;
+    border: 1px solid #e6edf5;
+    border-radius: 12px;
+    padding: 14px;
+    min-height: 180px;
+}
+
+.skills-box h3 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    color: #2C3E50;
+}
+
+.skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skills-list li {
+    position: relative;
+    border-bottom: none;
+}
+
+.skills-list li:last-child {
+    border-bottom: none;
+}
+
+.skills-list.missing li {
+    color: #e74c3c;
+}
+
+.chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 999px;
+    border: 1px solid #e6edf5;
+    background: #f7f9fc;
+    color: #34495E;
+}
+
+.chip-success {
+    background: rgba(22, 160, 133, 0.12);
+    color: #16a085;
+    border-color: rgba(22, 160, 133, 0.25);
+}
+
+.chip-danger {
+    background: rgba(231, 76, 60, 0.12);
+    color: #e74c3c;
+    border-color: rgba(231, 76, 60, 0.25);
+}
+
+.chip-skill {
+    background: #eef2f7;
+    color: #34495E;
+}
+
+.link-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 999px;
+    font-size: 14px;
+    text-decoration: none;
+    color: white;
+    background: linear-gradient(90deg, #007bff, #00a8ff);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.25);
+}
+
+.score-low { --gauge-color: #e74c3c; }
+.score-fair { --gauge-color: #f39c12; }
+.score-good { --gauge-color: #16a085; }
+.score-excellent { --gauge-color: #2ecc71; }
+.score-low .donut-value, .score-low .donut-label { color: #e74c3c; }
+.score-fair .donut-value, .score-fair .donut-label { color: #f39c12; }
+.score-good .donut-value, .score-good .donut-label { color: #16a085; }
+.score-excellent .donut-value, .score-excellent .donut-label { color: #2ecc71; }
+/* removed duplicate .donut-card block */
